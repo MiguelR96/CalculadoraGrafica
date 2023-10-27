@@ -1,8 +1,9 @@
 from tkinter import *
+import ast
 
-ventana = Tk()
-ventana.title("Calculadora")
-i = 0
+if __name__ == '__main__':
+    ventana = Tk()
+    ventana.title("Calculadora")
 
 # Entrada
 ent_texto = Entry(ventana, font = ("Calibri 20"))
@@ -10,20 +11,20 @@ ent_texto.grid(row = 0, column = 0, columnspan = 4, padx = 5, pady = 5)
 
 # Funciones
 def click_boton(valor):
-        global i
-        ent_texto.insert(i, valor)
-        i += 1
+    ent_texto.insert(END, valor)
 
 def borrar():
     ent_texto.delete(0, END)
-    i = 0
 
 def hacer_operacion():
     ecuacion = ent_texto.get()
-    resultado = eval(ecuacion)
-    ent_texto.delete(0, END)
-    ent_texto.insert(0 , resultado)
-    i = 0
+    try:
+        resultado = eval(ecuacion)
+        ent_texto.delete(0, END)
+        ent_texto.insert(0 , resultado)
+    except SyntaxError:
+        ent_texto.delete(0, END)
+        ent_texto.insert(0,"ERROR DE SINTAXIS")
 
 # Botones
     # Números
@@ -38,16 +39,16 @@ boton8 = Button(ventana, text = "8", width = 5, height = 2, command = lambda: cl
 boton9 = Button(ventana, text = "9", width = 5, height = 2, command = lambda: click_boton(9))
 boton0 = Button(ventana, text = "0", width = 15, height = 2, command = lambda: click_boton(0))
     # Acciones
-boton_borrar = Button(ventana, text = "AC", width = 5, height = 2, command = lambda: borrar())
+boton_borrar = Button(ventana, text = "AC", width = 5, height = 2, command = lambda: borrar()) # llama a la funcion click_boton sin argumentos
 boton_parentesis1 = Button(ventana, text = "(", width = 5, height = 2, command = lambda: click_boton("("))
 boton_parentesis2 = Button(ventana, text = ")", width = 5, height = 2, command = lambda: click_boton(")"))
 boton_punto = Button(ventana, text = ".", width = 5, height = 2, command = lambda: click_boton("."))
     # Operaciones
-boton_div = Button(ventana, text = "/", width = 5, height = 2, command = lambda: click_boton("/"))
-boton_mult = Button(ventana, text = "x", width = 5, height = 2, command = lambda: click_boton("*"))
-boton_suma = Button(ventana, text = "+", width = 5, height = 2, command = lambda: click_boton("+"))
-boton_resta = Button(ventana, text = "-", width = 5, height = 2, command = lambda: click_boton("-"))
-boton_igual = Button(ventana, text = "=", width = 5, height = 2, command = lambda: hacer_operacion())
+boton_div = Button(ventana, text = "/", width = 5, height = 2, command = lambda: click_boton("/")) # llama a la función click_boton con el argumento "/"
+boton_mult = Button(ventana, text = "x", width = 5, height = 2, command = lambda: click_boton("*")) # llama a la función click_boton con el argumento "*"
+boton_suma = Button(ventana, text = "+", width = 5, height = 2, command = lambda: click_boton("+")) # llama a la función click_boton con el argumento "+"
+boton_resta = Button(ventana, text = "-", width = 5, height = 2, command = lambda: click_boton("-")) # llama a la función click_boton con el argumento "-"
+boton_igual = Button(ventana, text = "=", width = 5, height = 2, command = lambda: hacer_operacion()) # llama a la función hacer_operacion sin argumentos
 
 # Agregar los Botones a la pantalla
     # Fila 1
